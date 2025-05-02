@@ -4,7 +4,7 @@ using Domain.Results;
 using MediatR;
 using System.Security.Claims;
 
-namespace Application.Commands;
+namespace Application.Commands.Accounts;
 
 public record LoginAccountCommand(string Username, string Password) : IRequest<Result<string>>
 {
@@ -39,7 +39,7 @@ public class LoginAccountCommandHandler(
         };
 
         var token = _jwtService.GenerateJwt(claims);
-        
+
         return token;
     }
 }

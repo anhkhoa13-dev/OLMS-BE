@@ -1,11 +1,12 @@
 ﻿using API.ErrorMessage;
-using Application.Commands;
+using Application.Commands.Accounts;
 using MediatR;
 using Microsoft.AspNetCore.Mvc;
 
 namespace API.Controllers;
 
 [Route("authentication")]
+[ApiController]
 public class AuthenticationController(
     ISender sender) : Controller
 {

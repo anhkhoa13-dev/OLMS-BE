@@ -4,10 +4,11 @@ using Microsoft.EntityFrameworkCore.Metadata.Builders;
 
 namespace Infrastructure.Database.Configurations.AccountAggregateConfigurations;
 
-public class AccountConfiguration : IEntityTypeConfiguration<Account>
+public sealed class AccountConfiguration : IEntityTypeConfiguration<Account>
 {
     public void Configure(EntityTypeBuilder<Account> builder)
     {
+        builder.ToTable("Account");
         builder.HasKey(a => a.Id);
 
         builder.Property(a => a.Username)

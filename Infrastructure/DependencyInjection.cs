@@ -1,9 +1,12 @@
-﻿using Domain.AccountAggregate;
+﻿using Application.Queries.Instructors;
+using Domain.AccountAggregate;
+using Domain.CourseAggregate;
 using Domain.InstructorAggregate;
 using Domain.IRepository;
 using Domain.StudentAggregate;
 using Infrastructure.Database;
 using Infrastructure.Database.Repositories.Commands;
+using Infrastructure.Database.Repositories.Queries;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
@@ -19,8 +22,14 @@ public static class DependencyInjection
             options.UseSqlServer(connectionString));
 
         services.AddScoped<IAccountRepository, AccountRepository>();
+
         services.AddScoped<IInstructorRepository, InstructorRepository>();
+        services.AddScoped<IInstructorQueries, InstructorQueries>();
+
         services.AddScoped<IStudentRepository, StudentRepository>();
+        services.AddScoped<ICourseRepository, CourseRepository>();
+
+
 
         services.AddScoped<IUnitOfWork, UnitOfWork>();
         return services;

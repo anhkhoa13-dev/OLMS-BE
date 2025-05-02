@@ -5,14 +5,14 @@ using Domain.Results;
 using Domain.StudentAggregate;
 using MediatR;
 
-namespace Application.Commands;
+namespace Application.Commands.Accounts;
 
 public record CreateAccountCommand(string Username, string Password, Role Role) : IRequest<Result>
 {
 }
 
 public class CreateAccountCommandHandler(
-    IAccountRepository accountRepository, 
+    IAccountRepository accountRepository,
     IStudentRepository studentRepository,
     IInstructorRepository instructorRepository,
     IUnitOfWork unitOfWork) : IRequestHandler<CreateAccountCommand, Result>
