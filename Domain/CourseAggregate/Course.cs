@@ -29,4 +29,18 @@ public class Course : AggregateRoot
         Section section = new(Guid.NewGuid(), title, description, _sections.Count + 1, Id);
         _sections.Add(section);
     }
+
+    public void RemoveSection(Guid sectionId)
+    {
+        Section? section = _sections.FirstOrDefault(s => s.Id == sectionId);
+        if (section is null) return;
+        _sections.Remove(section);
+
+        int order = section.Order;
+
+        foreach (var sec in _sections.Where(s => s.Order > order))
+        {
+            sec.Order --;
+        }
+    }
 }

@@ -1,4 +1,5 @@
-﻿using Application.Queries.Instructors;
+﻿using Application.Queries.Courses;
+using Application.Queries.Instructors;
 using Domain.AccountAggregate;
 using Domain.CourseAggregate;
 using Domain.InstructorAggregate;
@@ -24,10 +25,12 @@ public static class DependencyInjection
         services.AddScoped<IAccountRepository, AccountRepository>();
 
         services.AddScoped<IInstructorRepository, InstructorRepository>();
-        services.AddScoped<IInstructorQueries, InstructorQueries>();
+        services.AddScoped<IInstructorQuery, InstructorQuery>();
 
         services.AddScoped<IStudentRepository, StudentRepository>();
+
         services.AddScoped<ICourseRepository, CourseRepository>();
+        services.AddScoped<ICourseQuery, CourseQuery>();
 
 
 

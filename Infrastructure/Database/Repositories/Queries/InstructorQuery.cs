@@ -3,7 +3,7 @@ using Microsoft.EntityFrameworkCore;
 
 namespace Infrastructure.Database.Repositories.Queries;
 
-public sealed class InstructorQueries(ApplicationDbContext context) : IInstructorQueries
+public sealed class InstructorQuery(ApplicationDbContext context) : IInstructorQuery
 {
     private readonly ApplicationDbContext _context = context;
     public async Task<IEnumerable<CoursesDTOForInstructor>> GetCoursesByInstructorIdAsync(Guid instructorId)

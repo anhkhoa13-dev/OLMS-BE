@@ -28,9 +28,18 @@ public sealed class CourseConfiguration : IEntityTypeConfiguration<Course>
             c.HasIndex(c => c.Value).IsUnique();
         });
 
+        var navigation = builder.Metadata.FindNavigation(nameof(Course.Sections));
+        navigation!.SetPropertyAccessMode(PropertyAccessMode.Field);
+
         builder.HasOne<Instructor>()
             .WithMany()
             .HasForeignKey(c => c.InstructorId)
             .OnDelete(DeleteBehavior.Restrict);
+
+        builder.HasMany(c => c.Sections)
+            .WithOne()
+            .HasForeignKey(s => s.CourseId)
+            .OnDelete(DeleteBehavior.Cascade);
+
     }
 }

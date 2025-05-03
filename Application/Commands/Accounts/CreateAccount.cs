@@ -7,7 +7,7 @@ using MediatR;
 
 namespace Application.Commands.Accounts;
 
-public record CreateAccountCommand(string Username, string Password, Role Role) : IRequest<Result>
+public record CreateAccountCommand(string Username, string Password, string Fullname, Role Role) : IRequest<Result>
 {
 }
 
@@ -29,7 +29,7 @@ public class CreateAccountCommandHandler(
             return new Error("Username already exists");
         }
 
-        var account = new Account(Guid.NewGuid(), request.Username, request.Password, request.Role);
+        var account = new Account(Guid.NewGuid(), request.Username, request.Password,request.Fullname, request.Role);
 
         switch (request.Role)
         {

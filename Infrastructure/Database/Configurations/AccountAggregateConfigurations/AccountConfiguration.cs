@@ -19,6 +19,10 @@ public sealed class AccountConfiguration : IEntityTypeConfiguration<Account>
             .IsRequired()
             .HasMaxLength(100);
 
+        builder.Property(a => a.FullName)
+            .IsRequired()
+            .HasMaxLength(100);
+
         builder.Property(a => a.Role)
             .IsRequired()
             .HasConversion<string>();

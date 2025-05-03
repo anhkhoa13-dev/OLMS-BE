@@ -2,7 +2,7 @@
 
 namespace Application.Queries.Instructors;
 
-public interface IInstructorQueries
+public interface IInstructorQuery
 {
     Task<IEnumerable<CoursesDTOForInstructor>> GetCoursesByInstructorIdAsync(Guid instructorId);
 

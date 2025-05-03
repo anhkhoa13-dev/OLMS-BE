@@ -8,9 +8,17 @@ namespace Infrastructure.Database;
 
 public class ApplicationDbContext(DbContextOptions<ApplicationDbContext> options) : DbContext(options)
 {
+    //Account Aggregate
     public DbSet<Account> Accounts { get; set; }
+
+    //Course Aggregate
     public DbSet<Course> Courses { get; set; }
+    public DbSet<Section> Sections { get; set; }
+
+    //Instructor Aggregate
     public DbSet<Instructor> Instructors { get; set; }
+
+    //Student Aggregate
     public DbSet<Student> Students { get; set; }
     protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
     {

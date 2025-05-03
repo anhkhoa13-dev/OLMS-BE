@@ -15,9 +15,9 @@ public record GetCoursesCommand(Guid InstructorId) : IRequest<IEnumerable<Course
 }
 
 
-public class GetCoursesCommandHandler(IInstructorQueries instructorQueries) : IRequestHandler<GetCoursesCommand, IEnumerable<CoursesDTOForInstructor>>
+public class GetCoursesCommandHandler(IInstructorQuery instructorQueries) : IRequestHandler<GetCoursesCommand, IEnumerable<CoursesDTOForInstructor>>
 {
-    private readonly IInstructorQueries _instructorQueries = instructorQueries;
+    private readonly IInstructorQuery _instructorQueries = instructorQueries;
     public async Task<IEnumerable<CoursesDTOForInstructor>> Handle(GetCoursesCommand request, CancellationToken cancellationToken)
     {
         return await _instructorQueries.GetCoursesByInstructorIdAsync(request.InstructorId);
