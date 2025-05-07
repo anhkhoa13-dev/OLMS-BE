@@ -1,7 +1,11 @@
-﻿using Domain.AccountAggregate;
-using Domain.CourseAggregate;
-using Domain.InstructorAggregate;
-using Domain.StudentAggregate;
+﻿using Domain.Aggregates.AccountAggregate;
+using Domain.Aggregates.CourseAggregate;
+using Domain.Aggregates.InstructorAggregate;
+using Domain.Aggregates.QuizAggregate;
+using Domain.Aggregates.QuizAggregate.MultipleChoiceQuestionEntity;
+using Domain.Aggregates.QuizAggregate.ShortAnswerQuestionEntity;
+using Domain.Aggregates.SectionAggregate;
+using Domain.Aggregates.StudentAggregate;
 using Microsoft.EntityFrameworkCore;
 
 namespace Infrastructure.Database;
@@ -14,6 +18,12 @@ public class ApplicationDbContext(DbContextOptions<ApplicationDbContext> options
     //Course Aggregate
     public DbSet<Course> Courses { get; set; }
     public DbSet<Section> Sections { get; set; }
+
+    //Quiz Aggregate
+    public DbSet<Quiz> Quizzes { get; set; }
+    public DbSet<Question> Questions { get; set; }
+    public DbSet<MultipleChoiceQuestion> MultipleChoiceQuestions { get; set; }
+    public DbSet<ShortAnswerQuestion> ShortAnswerQuestions { get; set; }
 
     //Instructor Aggregate
     public DbSet<Instructor> Instructors { get; set; }

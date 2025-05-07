@@ -2,6 +2,7 @@ using API.Middleware;
 using Application;
 using System.Text.Json.Serialization;
 using Infrastructure;
+using Application.JsonConverter;
 
 namespace API;
 
@@ -16,6 +17,8 @@ public class Program
         builder.Services.AddControllers().AddJsonOptions(options =>
         {
             options.JsonSerializerOptions.Converters.Add(new JsonStringEnumConverter());
+            options.JsonSerializerOptions.Converters.Add(new QuestionRequestConverter());
+            options.JsonSerializerOptions.Converters.Add(new QuestionResponseConverter());
             options.JsonSerializerOptions.IncludeFields = true;
         }); 
 

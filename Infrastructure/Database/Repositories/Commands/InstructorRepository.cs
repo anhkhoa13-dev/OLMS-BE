@@ -1,6 +1,6 @@
 ﻿
 
-using Domain.InstructorAggregate;
+using Domain.Aggregates.InstructorAggregate;
 
 namespace Infrastructure.Database.Repositories.Commands;
 

@@ -1,6 +1,4 @@
-﻿
-
-using Domain.AccountAggregate;
+﻿using Domain.Aggregates.AccountAggregate;
 using Microsoft.EntityFrameworkCore;
 
 namespace Infrastructure.Database.Repositories.Commands;

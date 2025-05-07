@@ -1,4 +1,4 @@
-﻿using Domain.CourseAggregate;
+﻿using Domain.Aggregates.SectionAggregate;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
 

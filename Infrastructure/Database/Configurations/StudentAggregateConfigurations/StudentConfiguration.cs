@@ -1,5 +1,5 @@
-﻿using Domain.AccountAggregate;
-using Domain.StudentAggregate;
+﻿using Domain.Aggregates.AccountAggregate;
+using Domain.Aggregates.StudentAggregate;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
 

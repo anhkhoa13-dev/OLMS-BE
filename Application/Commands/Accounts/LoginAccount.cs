@@ -1,5 +1,5 @@
 ﻿using Application.Services;
-using Domain.AccountAggregate;
+using Domain.Aggregates.AccountAggregate;
 using Domain.Results;
 using MediatR;
 using System.Security.Claims;

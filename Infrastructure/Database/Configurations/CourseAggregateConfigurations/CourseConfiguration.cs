@@ -1,5 +1,5 @@
-﻿using Domain.CourseAggregate;
-using Domain.InstructorAggregate;
+﻿using Domain.Aggregates.CourseAggregate;
+using Domain.Aggregates.InstructorAggregate;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
 

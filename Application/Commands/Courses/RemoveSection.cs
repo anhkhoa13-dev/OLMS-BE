@@ -1,5 +1,5 @@
 ﻿
-using Domain.CourseAggregate;
+using Domain.Aggregates.CourseAggregate;
 using Domain.IRepository;
 using Domain.Results;
 using MediatR;

@@ -1,7 +1,5 @@
 ﻿using Microsoft.EntityFrameworkCore;
-
-
-using Domain.CourseAggregate;
+using Domain.Aggregates.CourseAggregate;
 
 namespace Infrastructure.Database.Repositories.Commands;
 

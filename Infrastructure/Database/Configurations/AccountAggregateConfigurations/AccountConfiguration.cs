@@ -1,4 +1,4 @@
-﻿using Domain.AccountAggregate;
+﻿using Domain.Aggregates.AccountAggregate;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
 

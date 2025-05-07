@@ -1,8 +1,8 @@
-﻿using Domain.AccountAggregate;
-using Domain.InstructorAggregate;
+﻿using Domain.Aggregates.AccountAggregate;
+using Domain.Aggregates.InstructorAggregate;
+using Domain.Aggregates.StudentAggregate;
 using Domain.IRepository;
 using Domain.Results;
-using Domain.StudentAggregate;
 using MediatR;
 
 namespace Application.Commands.Accounts;

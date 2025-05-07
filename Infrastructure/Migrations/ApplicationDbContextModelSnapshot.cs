@@ -22,7 +22,7 @@ namespace Infrastructure.Migrations
 
             SqlServerModelBuilderExtensions.UseIdentityColumns(modelBuilder);
 
-            modelBuilder.Entity("Domain.AccountAggregate.Account", b =>
+            modelBuilder.Entity("Domain.Aggregates.AccountAggregate.Account", b =>
                 {
                     b.Property<Guid>("Id")
                         .ValueGeneratedOnAdd()
@@ -52,7 +52,7 @@ namespace Infrastructure.Migrations
                     b.ToTable("Account", (string)null);
                 });
 
-            modelBuilder.Entity("Domain.CourseAggregate.Course", b =>
+            modelBuilder.Entity("Domain.Aggregates.CourseAggregate.Course", b =>
                 {
                     b.Property<Guid>("Id")
                         .ValueGeneratedOnAdd()
@@ -78,10 +78,92 @@ namespace Infrastructure.Migrations
                     b.ToTable("Course", (string)null);
                 });
 
-            modelBuilder.Entity("Domain.CourseAggregate.Section", b =>
+            modelBuilder.Entity("Domain.Aggregates.InstructorAggregate.Instructor", b =>
+                {
+                    b.Property<Guid>("Id")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("Instructor", (string)null);
+                });
+
+            modelBuilder.Entity("Domain.Aggregates.QuizAggregate.MultipleChoiceQuestionEntity.Choice", b =>
+                {
+                    b.Property<Guid>("Id")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<bool>("IsCorrect")
+                        .HasColumnType("bit");
+
+                    b.Property<Guid>("MultipleChoiceQuestionId")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<string>("Text")
+                        .IsRequired()
+                        .HasMaxLength(500)
+                        .HasColumnType("nvarchar(500)");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("MultipleChoiceQuestionId");
+
+                    b.ToTable("MultipleChoiceQuestion_Choices", (string)null);
+                });
+
+            modelBuilder.Entity("Domain.Aggregates.QuizAggregate.Question", b =>
+                {
+                    b.Property<Guid>("Id")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<int>("Order")
+                        .HasColumnType("int");
+
+                    b.Property<Guid>("QuizId")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<string>("Title")
+                        .IsRequired()
+                        .HasMaxLength(500)
+                        .HasColumnType("nvarchar(500)");
+
+                    b.Property<string>("Type")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("QuizId");
+
+                    b.ToTable("Question", (string)null);
+
+                    b.UseTptMappingStrategy();
+                });
+
+            modelBuilder.Entity("Domain.Aggregates.QuizAggregate.Quiz", b =>
                 {
                     b.Property<Guid>("Id")
                         .ValueGeneratedOnAdd()
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<string>("Description")
+                        .IsRequired()
+                        .HasMaxLength(500)
+                        .HasColumnType("nvarchar(500)");
+
+                    b.Property<string>("Title")
+                        .IsRequired()
+                        .HasMaxLength(100)
+                        .HasColumnType("nvarchar(100)");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("Quiz", (string)null);
+                });
+
+            modelBuilder.Entity("Domain.Aggregates.SectionAggregate.Section", b =>
+                {
+                    b.Property<Guid>("Id")
                         .HasColumnType("uniqueidentifier");
 
                     b.Property<Guid>("CourseId")
@@ -107,17 +189,7 @@ namespace Infrastructure.Migrations
                     b.ToTable("Section", (string)null);
                 });
 
-            modelBuilder.Entity("Domain.InstructorAggregate.Instructor", b =>
-                {
-                    b.Property<Guid>("Id")
-                        .HasColumnType("uniqueidentifier");
-
-                    b.HasKey("Id");
-
-                    b.ToTable("Instructor", (string)null);
-                });
-
-            modelBuilder.Entity("Domain.StudentAggregate.Student", b =>
+            modelBuilder.Entity("Domain.Aggregates.StudentAggregate.Student", b =>
                 {
                     b.Property<Guid>("Id")
                         .HasColumnType("uniqueidentifier");
@@ -127,15 +199,29 @@ namespace Infrastructure.Migrations
                     b.ToTable("Student", (string)null);
                 });
 
-            modelBuilder.Entity("Domain.CourseAggregate.Course", b =>
+            modelBuilder.Entity("Domain.Aggregates.QuizAggregate.MultipleChoiceQuestionEntity.MultipleChoiceQuestion", b =>
                 {
-                    b.HasOne("Domain.InstructorAggregate.Instructor", null)
+                    b.HasBaseType("Domain.Aggregates.QuizAggregate.Question");
+
+                    b.ToTable("MultipleChoiceQuestion", (string)null);
+                });
+
+            modelBuilder.Entity("Domain.Aggregates.QuizAggregate.ShortAnswerQuestionEntity.ShortAnswerQuestion", b =>
+                {
+                    b.HasBaseType("Domain.Aggregates.QuizAggregate.Question");
+
+                    b.ToTable("ShortAnswerQuestion", (string)null);
+                });
+
+            modelBuilder.Entity("Domain.Aggregates.CourseAggregate.Course", b =>
+                {
+                    b.HasOne("Domain.Aggregates.InstructorAggregate.Instructor", null)
                         .WithMany()
                         .HasForeignKey("InstructorId")
                         .OnDelete(DeleteBehavior.Restrict)
                         .IsRequired();
 
-                    b.OwnsOne("Domain.CourseAggregate.Code", "Code", b1 =>
+                    b.OwnsOne("Domain.Aggregates.CourseAggregate.Code", "Code", b1 =>
                         {
                             b1.Property<Guid>("CourseId")
                                 .HasColumnType("uniqueidentifier");
@@ -160,36 +246,102 @@ namespace Infrastructure.Migrations
                         .IsRequired();
                 });
 
-            modelBuilder.Entity("Domain.CourseAggregate.Section", b =>
+            modelBuilder.Entity("Domain.Aggregates.InstructorAggregate.Instructor", b =>
                 {
-                    b.HasOne("Domain.CourseAggregate.Course", null)
+                    b.HasOne("Domain.Aggregates.AccountAggregate.Account", null)
+                        .WithOne()
+                        .HasForeignKey("Domain.Aggregates.InstructorAggregate.Instructor", "Id")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+                });
+
+            modelBuilder.Entity("Domain.Aggregates.QuizAggregate.MultipleChoiceQuestionEntity.Choice", b =>
+                {
+                    b.HasOne("Domain.Aggregates.QuizAggregate.MultipleChoiceQuestionEntity.MultipleChoiceQuestion", null)
+                        .WithMany("Choices")
+                        .HasForeignKey("MultipleChoiceQuestionId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+                });
+
+            modelBuilder.Entity("Domain.Aggregates.QuizAggregate.Question", b =>
+                {
+                    b.HasOne("Domain.Aggregates.QuizAggregate.Quiz", null)
+                        .WithMany("Questions")
+                        .HasForeignKey("QuizId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+                });
+
+            modelBuilder.Entity("Domain.Aggregates.SectionAggregate.Section", b =>
+                {
+                    b.HasOne("Domain.Aggregates.CourseAggregate.Course", null)
                         .WithMany("Sections")
                         .HasForeignKey("CourseId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
                 });
 
-            modelBuilder.Entity("Domain.InstructorAggregate.Instructor", b =>
+            modelBuilder.Entity("Domain.Aggregates.StudentAggregate.Student", b =>
                 {
-                    b.HasOne("Domain.AccountAggregate.Account", null)
+                    b.HasOne("Domain.Aggregates.AccountAggregate.Account", null)
                         .WithOne()
-                        .HasForeignKey("Domain.InstructorAggregate.Instructor", "Id")
+                        .HasForeignKey("Domain.Aggregates.StudentAggregate.Student", "Id")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
                 });
 
-            modelBuilder.Entity("Domain.StudentAggregate.Student", b =>
+            modelBuilder.Entity("Domain.Aggregates.QuizAggregate.MultipleChoiceQuestionEntity.MultipleChoiceQuestion", b =>
                 {
-                    b.HasOne("Domain.AccountAggregate.Account", null)
+                    b.HasOne("Domain.Aggregates.QuizAggregate.Question", null)
                         .WithOne()
-                        .HasForeignKey("Domain.StudentAggregate.Student", "Id")
+                        .HasForeignKey("Domain.Aggregates.QuizAggregate.MultipleChoiceQuestionEntity.MultipleChoiceQuestion", "Id")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
                 });
 
-            modelBuilder.Entity("Domain.CourseAggregate.Course", b =>
+            modelBuilder.Entity("Domain.Aggregates.QuizAggregate.ShortAnswerQuestionEntity.ShortAnswerQuestion", b =>
+                {
+                    b.HasOne("Domain.Aggregates.QuizAggregate.Question", null)
+                        .WithOne()
+                        .HasForeignKey("Domain.Aggregates.QuizAggregate.ShortAnswerQuestionEntity.ShortAnswerQuestion", "Id")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.OwnsMany("Domain.Aggregates.QuizAggregate.ShortAnswerQuestionEntity.CorrectAnswer", "CorrectAnswers", b1 =>
+                        {
+                            b1.Property<Guid>("ShortAnswerQuestionId")
+                                .HasColumnType("uniqueidentifier");
+
+                            b1.Property<string>("Text")
+                                .HasMaxLength(100)
+                                .HasColumnType("nvarchar(100)")
+                                .HasColumnName("Text");
+
+                            b1.HasKey("ShortAnswerQuestionId", "Text");
+
+                            b1.ToTable("ShortAnswerQuestion_CorrectAnswer", (string)null);
+
+                            b1.WithOwner()
+                                .HasForeignKey("ShortAnswerQuestionId");
+                        });
+
+                    b.Navigation("CorrectAnswers");
+                });
+
+            modelBuilder.Entity("Domain.Aggregates.CourseAggregate.Course", b =>
                 {
                     b.Navigation("Sections");
+                });
+
+            modelBuilder.Entity("Domain.Aggregates.QuizAggregate.Quiz", b =>
+                {
+                    b.Navigation("Questions");
+                });
+
+            modelBuilder.Entity("Domain.Aggregates.QuizAggregate.MultipleChoiceQuestionEntity.MultipleChoiceQuestion", b =>
+                {
+                    b.Navigation("Choices");
                 });
 #pragma warning restore 612, 618
         }
